@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -13,10 +13,10 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="./Converter.js">Converter</a>
+              <Link className="nav-link" to="/Converter">Converter</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about">Exchange Table</a>
+              <Link className="nav-link" to="/CurrencyTablePage">Exchange Table</Link>
             </li>
           </ul>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Converter.css'; // Import CSS file
+import './Converter.css'; 
 
 const Converter = () => {
   const [amount, setAmount] = useState('');
@@ -33,6 +33,13 @@ const Converter = () => {
     fetchData();
   }, [fromCurrency, toCurrency]);
 
+  useEffect(() => {
+    if (exchangeRate && amount) {
+      const converted = (amount * exchangeRate).toFixed(2);
+      setConvertedAmount(converted);
+    }
+  }, [exchangeRate, amount]);
+
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
   };
@@ -45,16 +52,11 @@ const Converter = () => {
     setToCurrency(e.target.value);
   };
 
-  const convertCurrency = () => {
-    const converted = (amount * exchangeRate).toFixed(2);
-    setConvertedAmount(converted);
-  };
-
   return (
     <div className="converter-container">
       <h2>Converter</h2>
       <div className="converter-form">
-        <input type="number" value={amount} onChange={handleAmountChange} />
+        <input type="number" style={{width: 150 + 'px'}} placeholder="Amount" value={amount} onChange={handleAmountChange} min="0"/>
         <select value={fromCurrency} onChange={handleFromCurrencyChange}>
           {currencies.map(currency => (
             <option key={currency} value={currency}>{currency}</option>
@@ -66,10 +68,9 @@ const Converter = () => {
             <option key={currency} value={currency}>{currency}</option>
           ))}
         </select>
-        <button onClick={convertCurrency}>Convert</button>
       </div>
       {convertedAmount && (
-        <p>{amount} {fromCurrency} = {convertedAmount} {toCurrency}</p>
+        <p className='result'>{amount} {fromCurrency} = {convertedAmount} {toCurrency}</p>
       )}
     </div>
   );

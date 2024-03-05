@@ -1,17 +1,14 @@
-/* Converter.css */
 .converter-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  background-color: #eaf3ff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .converter-container h2 {
   margin-bottom: 20px;
-  color: #2e6da4;
+  color: #3498db;
 }
 
 .converter-container input[type="number"],
@@ -29,7 +26,7 @@
 }
 
 .converter-container button {
-  background-color: #337ab7;
+  background-color: #3498db;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -39,9 +36,51 @@
 .converter-container p {
   margin-top: 10px;
   font-weight: bold;
-  color: #2e6da4;
+  color: #3498db;
 }
 
 .converter-container span {
   margin: 10px;
 }
+
+.result, .converter-form {
+  @media only screen and (min-width: 1200px) {
+    width: 50%;
+    text-align: center;
+    font-size: 25px;
+  }  
+} 
+
+.result, .converter-form {
+  @media only screen and (min-width: 768px) and (max-width: 1200px) {
+    width: 75%;
+    text-align: center;
+    font-size: 20px;
+  }
+}
+
+.result, .converter-form {
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.result {
+  font-size: 25px;
+  padding-top: 10px;
+  background-color: rgb(255, 255, 255);
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.converter-form {
+  background-color: white;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+
