@@ -1,24 +1,20 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import "./NavBar.css";
+import "/node_modules/jquery/dist/jquery.min.js";
+import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "/node_modules/bootstrap/js/dist/collapse.js";
+
 
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="/">Currency Converter</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <Link className="navbar-brand" to="/">Currency Converter</Link>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/Converter">Converter</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/CurrencyTablePage">Exchange Table</Link>
-            </li>
-          </ul>
+        <div className='nav-items'>
+          <Link className="nav-link" to="/Converter">Converter</Link>
+          <Link className="nav-link" to="/CurrencyTablePage">Exchange Table</Link>
         </div>
       </div>
     </nav>
