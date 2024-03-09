@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './Converter.css'; 
+import './Converter.css';
+import { Chart } from 'chart.js';
 
 const Converter = () => {
+  // Existing state variables
   const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('');
   const [toCurrency, setToCurrency] = useState('');
   const [exchangeRate, setExchangeRate] = useState(null);
   const [convertedAmount, setConvertedAmount] = useState(null);
   const [currencies, setCurrencies] = useState([]);
+  const [historicalRates, setHistoricalRates] = useState(null);
+  const [historicalChart, setHistoricalChart] = useState(null);
 
   useEffect(() => {
     const fetchCurrencies = async () => {
@@ -52,6 +56,51 @@ const Converter = () => {
     setToCurrency(e.target.value);
   };
 
+  const getHistoricalRates = async () => {
+    const endDate = new Date().toISOString().split('T')[0];
+    const startDate = new Date((new Date()).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+    const response = await fetch(`https://api.frankfurter.app/${startDate}..${endDate}?from=${fromCurrency}&to=${toCurrency}`);
+    const data = await response.json();
+    setHistoricalRates(data.rates);
+  };
+
+  useEffect(() => {
+    getHistoricalRates();
+  }, [fromCurrency, toCurrency]);
+
+  const buildHistoricalChart = () => {
+    if (!historicalRates) return;
+
+    const chartLabels = Object.keys(historicalRates);
+    const chartData = chartLabels.map(date => historicalRates[date][toCurrency]);
+
+    const ctx = document.getElementById('chart').getContext('2d');
+  
+    if (historicalChart) {
+      historicalChart.destroy(); // Destroy the previous chart instance
+    }
+
+    const newChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: chartLabels,
+        datasets: [{
+          label: `Historical Rates (${fromCurrency}/${toCurrency})`,
+          data: chartData,
+          borderColor: 'blue',
+          borderWidth: 1,
+          fill: false
+        }]
+      }
+    });
+
+    setHistoricalChart(newChart);
+  };
+
+  useEffect(() => {
+    buildHistoricalChart();
+  }, [historicalRates]);
+
   return (
     <div className="converter-container">
       <h2>Converter</h2>
@@ -72,6 +121,7 @@ const Converter = () => {
       {convertedAmount && (
         <p className='result'>{amount} {fromCurrency} = {convertedAmount} {toCurrency}</p>
       )}
+      <canvas id="chart"></canvas>
     </div>
   );
 };
